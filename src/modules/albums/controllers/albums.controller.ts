@@ -57,11 +57,11 @@ export class AlbumsController {
 
   @Delete(':id')
   @HttpCode(204)
-  async deleteTrack(@Param('id') id: string) {
+  async deleteAlbum(@Param('id') id: string) {
     validateUuid(id);
     const result = await this.service.deleteAlbum(id);
     isFound(result);
-    this.favService.removeFavoriteTrack(id);
+    this.favService.removeFavoriteAlbum(id);
     return result;
   }
 }

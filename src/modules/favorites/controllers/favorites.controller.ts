@@ -43,11 +43,11 @@ export class FavoritesController {
   @Post('track/:id')
   async addFavTrack(@Param('id') id: string) {
     validateUuid(id);
-    const track = this.trackService.getTrack(id);
+    const track = await this.trackService.getTrack(id);
     if(!track){
       throw new HttpException('track doesnt exist', 422);
     }
-    await this.favService.addFavoriteTrack(id);
+    await await this.favService.addFavoriteTrack(id);
   }
 
   @Delete('track/:id')
@@ -61,7 +61,7 @@ export class FavoritesController {
   @Post('album/:id')
   async addFavAlbum(@Param('id') id: string) {
     validateUuid(id);
-    const album = this.albumsService.getAlbum(id);
+    const album = await this.albumsService.getAlbum(id);
     if(!album){
       throw new HttpException('album doesnt exist', 422);
     }
@@ -79,7 +79,7 @@ export class FavoritesController {
   @Post('artist/:id')
   async addFavAritst(@Param('id') id: string) {
     validateUuid(id);
-    const artist = this.ArtistsService.getArtist(id);
+    const artist = await this.ArtistsService.getArtist(id);
     if(!artist){
       throw new HttpException('artist doesnt exist', 422);
     }
@@ -92,6 +92,5 @@ export class FavoritesController {
     validateUuid(id);
     const item = await this.favService.removeFavoriteArtist(id);
     isFound(item);
-    return true
   }
 }

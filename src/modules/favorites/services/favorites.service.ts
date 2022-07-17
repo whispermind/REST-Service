@@ -12,7 +12,7 @@ export class FavoritesService {
     return true;
   }
 
-  removeFavoriteTrack(id: string) {
+  async removeFavoriteTrack(id: string) {
     let item;
     store.favorites.tracks = store.favorites.tracks.filter((trackId) => {
       if (trackId === id) {
@@ -24,12 +24,12 @@ export class FavoritesService {
     return item || false;
   }
 
-  addFavoriteAlbum(id: string) {
+  async addFavoriteAlbum(id: string) {
     store.favorites.albums.push(id);
     return true;
   }
 
-  removeFavoriteAlbum(id: string) {
+  async removeFavoriteAlbum(id: string) {
     let item;
     store.favorites.albums = store.favorites.albums.filter((albumId) => {
       if (albumId === id) {
@@ -41,12 +41,12 @@ export class FavoritesService {
     return item || false;
   }
 
-  addFavoriteArtist(id: string) {
+  async addFavoriteArtist(id: string) {
     store.favorites.artists.push(id);
     return true;
   }
 
-  removeFavoriteArtist(id: string) {
+  async removeFavoriteArtist(id: string) {
     let item;
     store.favorites.artists = store.favorites.artists.filter((artistId) => {
       if (artistId === id) {

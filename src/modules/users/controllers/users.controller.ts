@@ -55,10 +55,10 @@ export class UsersController {
     if (user.password !== body.oldPassword) {
       throw new HttpException('Wrong password', 403);
     }
-    const updated = this.service.updatePassword({
+    const updated = await this.service.updatePassword({
       ...user,
       updatedAt: Date.now(),
-      password: body.newPass,
+      password: body.newPassword,
       version: user.version + 1,
     });
     return { ...updated, password: undefined };
