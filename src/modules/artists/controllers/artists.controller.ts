@@ -26,13 +26,13 @@ export class ArtistsController {
     validateUuid(id);
     const artist = await this.service.getArtist(id);
     isFound(artist);
-    return artist
+    return artist;
   }
 
   @Post()
   async createArtist(@Body() body: CreateArtistDto) {
     const artist = await this.service.createArtist({ ...body, id: v4() });
-    return artist
+    return artist;
   }
 
   @Put(':id')
@@ -42,9 +42,9 @@ export class ArtistsController {
     isFound(artist);
     const updated = this.service.updateArtist({
       ...artist,
-      ...body
+      ...body,
     });
-    return updated
+    return updated;
   }
 
   @Delete(':id')
