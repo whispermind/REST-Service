@@ -8,14 +8,16 @@ import {
   Body,
   Put,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { ArtistsService } from '../services/artists.service';
 import { v4 } from 'uuid';
 import { isFound, validateUuid } from 'src/validation/validation';
+import { FavoritesService } from 'src/modules/favorites/services/favorites.service';
 
 @Controller('artist')
 export class ArtistsController {
-  constructor(private service: ArtistsService) {}
+  constructor(private service: ArtistsService, private favService: FavoritesService) {}
   @Get()
   async getArtists() {
     return await this.service.getArtists();
@@ -48,10 +50,12 @@ export class ArtistsController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   async deleteArtist(@Param('id') id: string) {
     validateUuid(id);
     const result = await this.service.deleteArtist(id);
     isFound(result);
+    this.favService.removeFavoriteArtist(id)
     return result;
   }
 }

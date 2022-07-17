@@ -18,8 +18,8 @@ export class AlbumsService {
   }
 
   async updateAlbum(update: IAlbum) {
-    const index = await store.artists.findIndex(
-      (artist) => artist.id === update.id,
+    const index = await store.albums.findIndex(
+      (album) => album.id === update.id,
     );
     if (index < 0) return false;
     store.albums[index] = update;
@@ -35,6 +35,11 @@ export class AlbumsService {
       }
       return true;
     });
+    store.tracks.forEach((track) => {
+      if(track.albumId === id){
+        track.albumId = null;
+      }
+    })
     return item || false;
   }
 }

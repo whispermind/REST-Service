@@ -35,6 +35,12 @@ export class ArtistsService {
       }
       return true;
     });
+    store.albums.forEach((album) => {
+      if(album.artistId === id) album.artistId = null;
+    });
+    store.tracks.forEach((track) => {
+      if(track.artistId === id) track.artistId = null;
+    });
     return item || false;
   }
 }

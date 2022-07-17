@@ -10,6 +10,7 @@ import {
   Body,
   Put,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { v4 } from 'uuid';
@@ -21,7 +22,7 @@ export class UsersController {
   @Get()
   async getUsers() {
     return (await this.service.getUsers()).map((user: IUser) => {
-      return { ...user, password: null };
+      return { ...user, password: undefined };
     });
   }
 
@@ -30,7 +31,7 @@ export class UsersController {
     validateUuid(id);
     const user = await this.service.getUser(id);
     isFound(user);
-    return { ...user, password: null };
+    return { ...user, password: undefined };
   }
 
   @Post()
@@ -43,7 +44,7 @@ export class UsersController {
       updatedAt: Date.now(),
     };
     const user = await this.service.createUser(data);
-    return { ...user, password: null };
+    return { ...user, password: undefined };
   }
 
   @Put(':id')
@@ -60,10 +61,11 @@ export class UsersController {
       password: body.newPass,
       version: user.version + 1,
     });
-    return { ...updated, password: null };
+    return { ...updated, password: undefined };
   }
 
   @Delete(':id')
+  @HttpCode(204)
   async deleteUser(@Param('id') id: string) {
     validateUuid(id);
     const result = await this.service.deleteUser(id);
