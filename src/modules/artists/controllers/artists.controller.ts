@@ -1,0 +1,57 @@
+import { CreateArtistDto } from '../dto/create-artist.dto';
+import { UpdateArtistDto } from '../dto/update-artist-dto';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+} from '@nestjs/common';
+import { ArtistsService } from '../services/artists.service';
+import { v4 } from 'uuid';
+import { isFound, validateUuid } from 'src/validation/validation';
+
+@Controller('artist')
+export class ArtistsController {
+  constructor(private service: ArtistsService) {}
+  @Get()
+  async getArtists() {
+    return await this.service.getArtists();
+  }
+
+  @Get(':id')
+  async getArtist(@Param('id') id: string) {
+    validateUuid(id);
+    const artist = await this.service.getArtist(id);
+    isFound(artist);
+    return artist
+  }
+
+  @Post()
+  async createArtist(@Body() body: CreateArtistDto) {
+    const artist = await this.service.createArtist({ ...body, id: v4() });
+    return artist
+  }
+
+  @Put(':id')
+  async updateArtist(@Param('id') id: string, @Body() body: UpdateArtistDto) {
+    validateUuid(id);
+    const artist = await this.service.getArtist(id);
+    isFound(artist);
+    const updated = this.service.updateArtist({
+      ...artist,
+      ...body
+    });
+    return updated
+  }
+
+  @Delete(':id')
+  async deleteArtist(@Param('id') id: string) {
+    validateUuid(id);
+    const result = await this.service.deleteArtist(id);
+    isFound(result);
+    return result;
+  }
+}
