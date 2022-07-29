@@ -5,6 +5,8 @@ import { TracksModule } from './modules/tracks/tracks.module';
 import { AlbumsModule } from './modules/albums/albums.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import typeormConfig from './typeorm.config'
+
 @Module({
   imports: [
     UsersModule,
@@ -12,16 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TracksModule,
     AlbumsModule,
     FavoritesModule,
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'localhost',
-    //   port: 500,
-    //   username: null,
-    //   password: null,
-    //   database: null,
-    //   entities: [],
-    //   synchronize: true
-    // })
+    TypeOrmModule.forRoot(typeormConfig)
   ],
 })
 export class AppModule {}
