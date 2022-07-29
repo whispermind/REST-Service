@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { store } from 'src/db';
 import { ITrack } from 'src/IData/IData';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Track } from '../entity/track.entity';
 
 @Injectable()
 export class TracksService {
+  constructor(
+    
+  ){}
+
   async getTracks() {
     return await store.tracks;
   }

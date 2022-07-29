@@ -8,7 +8,7 @@ export class Artist {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column('string')
+  @Column('text')
   name: string;
 
   @Column('integer')

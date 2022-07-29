@@ -59,8 +59,9 @@ export class AlbumsController {
   @HttpCode(204)
   async deleteAlbum(@Param('id') id: string) {
     validateUuid(id);
-    const result = await this.service.deleteAlbum(id);
-    isFound(result);
+    const album = await this.service.getAlbum(id);
+    isFound(album);
+    const result = await this.service.deleteAlbum(album);
     this.favService.removeFavoriteAlbum(id);
     return result;
   }

@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Album } from './entity/album.entity';
 
 @Module({
-  imports: [forwardRef(() => FavoritesModule), TypeOrmModule.forFeature(Album)],
+  imports: [forwardRef(() => FavoritesModule), TypeOrmModule.forFeature([Album])],
   controllers: [AlbumsController],
   providers: [AlbumsService],
   exports: [AlbumsService],

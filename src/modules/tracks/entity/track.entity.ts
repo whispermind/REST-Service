@@ -8,7 +8,7 @@ export class Track {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column('string')
+  @Column('text')
   name: string;
 
   @Column({ nullable: true })
