@@ -4,7 +4,7 @@
 
 ## Installation
 ```bash
-git clone https://github.com/1nspir3d/nodejs2022Q2-service
+git clone https://github.com/whispermind/nodejs2022Q2-service
 cd nodejs2022Q2-service
 git checkout db-orm
 ```
