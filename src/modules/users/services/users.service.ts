@@ -1,36 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { store } from 'src/db';
+import { InjectRepository } from '@nestjs/typeorm';
 import { IUser } from 'src/IData/IData';
+import { Repository } from 'typeorm';
+import { User } from '../entity/user.entity';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
   async getUsers() {
-    return await store.users;
+    const data = await this.usersRepository.find();
+    return data;
   }
   async getUser(id: string) {
-    return await store.users.find((user) => user.id === id);
+    const data = await this.usersRepository.findOneBy({ id });
+    return data;
   }
   async createUser(user: IUser) {
-    await store.users.push(user);
-    return user;
+    const data = await this.usersRepository.save(user);
+    return data;
   }
 
   async updatePassword(update: IUser) {
-    const index = await store.users.findIndex((user) => user.id === update.id);
-    if (index < 0) return false;
-    store.users[index] = update;
-    return update;
+    const data = await this.usersRepository.save(update);
+    return data;
   }
 
-  async deleteUser(id: string) {
-    let item;
-    store.users = await store.users.filter((user) => {
-      if (user.id === id) {
-        item = user;
-        return false;
-      }
-      return true;
-    });
-    return item || false;
+  async deleteUser(user: User) {
+    const data = await this.usersRepository.remove(user);
+    return data;
   }
 }

@@ -17,7 +17,10 @@ import { FavoritesService } from 'src/modules/favorites/services/favorites.servi
 
 @Controller('track')
 export class TracksController {
-  constructor(private service: TracksService, private favService: FavoritesService) {}
+  constructor(
+    private service: TracksService,
+    private favService: FavoritesService,
+  ) {}
   @Get()
   async getTracks() {
     return await this.service.getTracks();
@@ -62,8 +65,9 @@ export class TracksController {
   @HttpCode(204)
   async deleteTrack(@Param('id') id: string) {
     validateUuid(id);
-    const result = await this.service.deleteTrack(id);
-    isFound(result);
+    const item = await this.service.getTrack(id);
+    isFound(item);
+    const result = await this.service.deleteTrack(item);
     this.favService.removeFavoriteTrack(id);
     return result;
   }

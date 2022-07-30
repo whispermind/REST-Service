@@ -40,11 +40,9 @@ export class UsersController {
       ...body,
       id: v4(),
       version: 1,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     };
     const user = await this.service.createUser(data);
-    return { ...user, password: undefined  };
+    return { ...user, password: undefined };
   }
 
   @Put(':id')
@@ -57,7 +55,6 @@ export class UsersController {
     }
     const updated = await this.service.updatePassword({
       ...user,
-      updatedAt: Date.now(),
       password: body.newPassword,
       version: user.version + 1,
     });
@@ -68,8 +65,9 @@ export class UsersController {
   @HttpCode(204)
   async deleteUser(@Param('id') id: string) {
     validateUuid(id);
-    const result = await this.service.deleteUser(id);
-    isFound(result);
+    const user = await this.service.getUser(id);
+    isFound(user);
+    const result = await this.service.deleteUser(user);
     return result;
   }
 }

@@ -1,5 +1,13 @@
 import { IAlbum, ITrack, IArtist } from './../../../IData/IData';
-import { Controller, Get, Param, Post, Delete, HttpCode, HttpException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Delete,
+  HttpCode,
+  HttpException,
+} from '@nestjs/common';
 import { isFound, validateUuid } from 'src/validation/validation';
 import { FavoritesService } from '../services/favorites.service';
 import { TracksService } from 'src/modules/tracks/services/tracks.service';
@@ -22,7 +30,7 @@ export class FavoritesController {
   ) {}
   @Get()
   async getFavs() {
-    const ids = await this.favService.getFavorites();
+    const ids = (await this.favService.getFavorites())[0];
     const responseData: FavsData = {
       albums: [],
       tracks: [],
@@ -37,6 +45,9 @@ export class FavoritesController {
     responseData.artists = await Promise.all(
       ids.artists.map((id) => this.ArtistsService.getArtist(id)),
     );
+    responseData.albums = responseData.albums.filter((id) => !!id);
+    responseData.artists = responseData.artists.filter((id) => !!id);
+    responseData.tracks = responseData.tracks.filter((id) => !!id);
     return responseData;
   }
 
@@ -44,10 +55,10 @@ export class FavoritesController {
   async addFavTrack(@Param('id') id: string) {
     validateUuid(id);
     const track = await this.trackService.getTrack(id);
-    if(!track){
+    if (!track) {
       throw new HttpException('track doesnt exist', 422);
     }
-    await await this.favService.addFavoriteTrack(id);
+    await this.favService.addFavoriteTrack(id);
   }
 
   @Delete('track/:id')
@@ -62,7 +73,7 @@ export class FavoritesController {
   async addFavAlbum(@Param('id') id: string) {
     validateUuid(id);
     const album = await this.albumsService.getAlbum(id);
-    if(!album){
+    if (!album) {
       throw new HttpException('album doesnt exist', 422);
     }
     await this.favService.addFavoriteAlbum(id);
@@ -80,7 +91,7 @@ export class FavoritesController {
   async addFavAritst(@Param('id') id: string) {
     validateUuid(id);
     const artist = await this.ArtistsService.getArtist(id);
-    if(!artist){
+    if (!artist) {
       throw new HttpException('artist doesnt exist', 422);
     }
     await this.favService.addFavoriteArtist(id);

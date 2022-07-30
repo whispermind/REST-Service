@@ -1,45 +1,38 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { store } from 'src/db';
 import { IAlbum } from 'src/IData/IData';
+import { Album } from '../entity/album.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AlbumsService {
+  constructor(
+    @InjectRepository(Album)
+    private albumsRepository: Repository<Album>,
+  ) {}
+
   async getAlbums() {
-    return await store.albums;
+    const data = await this.albumsRepository.find();
+    return data;
   }
 
   async getAlbum(id: string) {
-    return await store.albums.find((album) => album.id === id);
+    const data = await this.albumsRepository.findOneBy({ id });
+    return data;
   }
 
   async createAlbum(album: IAlbum) {
-    await store.albums.push(album);
-    return album;
+    const data = await this.albumsRepository.save(album);
+    return data;
   }
 
   async updateAlbum(update: IAlbum) {
-    const index = await store.albums.findIndex(
-      (album) => album.id === update.id,
-    );
-    if (index < 0) return false;
-    store.albums[index] = update;
-    return update;
+    const data = await this.albumsRepository.save(update);
+    return data;
   }
 
-  async deleteAlbum(id: string) {
-    let item;
-    store.albums = store.albums.filter((album) => {
-      if (album.id === id) {
-        item = album;
-        return false;
-      }
-      return true;
-    });
-    store.tracks.forEach((track) => {
-      if(track.albumId === id){
-        track.albumId = null;
-      }
-    })
-    return item || false;
+  async deleteAlbum(album: Album) {
+    const data = await this.albumsRepository.remove(album);
+    return data;
   }
 }
