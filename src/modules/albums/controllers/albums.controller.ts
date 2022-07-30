@@ -17,7 +17,10 @@ import { AlbumsService } from '../services/albums.service';
 
 @Controller('album')
 export class AlbumsController {
-  constructor(private service: AlbumsService, private favService: FavoritesService) {}
+  constructor(
+    private service: AlbumsService,
+    private favService: FavoritesService,
+  ) {}
   @Get()
   async getAlbums() {
     return await this.service.getAlbums();

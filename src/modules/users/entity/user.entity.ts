@@ -1,17 +1,23 @@
-import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryColumn("uuid")
+  @PrimaryColumn('uuid')
   id: string;
 
-  @Column("text")
+  @Column('text')
   login: string;
 
-  @Column("text")
+  @Column('text')
   password: string;
 
-  @Column("integer")
+  @Column('integer')
   version: number;
 
   @CreateDateColumn({

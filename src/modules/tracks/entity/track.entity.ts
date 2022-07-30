@@ -30,7 +30,7 @@ export class Track {
   })
   @Exclude()
   artist: Artist;
-  
+
   @Column('integer')
   duration: number;
 }

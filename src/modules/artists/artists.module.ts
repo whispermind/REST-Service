@@ -6,7 +6,10 @@ import { Artist } from './entity/artists.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [forwardRef(() => FavoritesModule), TypeOrmModule.forFeature([Artist])],
+  imports: [
+    forwardRef(() => FavoritesModule),
+    TypeOrmModule.forFeature([Artist]),
+  ],
   controllers: [ArtistsController],
   providers: [ArtistsService],
   exports: [ArtistsService],

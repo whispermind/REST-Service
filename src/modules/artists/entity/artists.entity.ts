@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Album } from 'src/modules/albums/entity/album.entity';
 import { Track } from 'src/modules/tracks/entity/track.entity';

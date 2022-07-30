@@ -17,7 +17,10 @@ import { FavoritesService } from 'src/modules/favorites/services/favorites.servi
 
 @Controller('artist')
 export class ArtistsController {
-  constructor(private service: ArtistsService, private favService: FavoritesService) {}
+  constructor(
+    private service: ArtistsService,
+    private favService: FavoritesService,
+  ) {}
   @Get()
   async getArtists() {
     return await this.service.getArtists();
@@ -55,8 +58,8 @@ export class ArtistsController {
     validateUuid(id);
     const item = await this.service.getArtist(id);
     isFound(item);
-    const result = await this.service.deleteArtist(item)
-    this.favService.removeFavoriteArtist(id)
+    const result = await this.service.deleteArtist(item);
+    this.favService.removeFavoriteArtist(id);
     return result;
   }
 }

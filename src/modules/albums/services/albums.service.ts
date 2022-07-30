@@ -8,31 +8,31 @@ import { Repository } from 'typeorm';
 export class AlbumsService {
   constructor(
     @InjectRepository(Album)
-    private albumsRepository: Repository<Album>
-  ){}
+    private albumsRepository: Repository<Album>,
+  ) {}
 
   async getAlbums() {
     const data = await this.albumsRepository.find();
-    return data
+    return data;
   }
 
   async getAlbum(id: string) {
-    const data = await this.albumsRepository.findOneBy({id});
-    return data
+    const data = await this.albumsRepository.findOneBy({ id });
+    return data;
   }
 
   async createAlbum(album: IAlbum) {
     const data = await this.albumsRepository.save(album);
-    return data
+    return data;
   }
 
   async updateAlbum(update: IAlbum) {
     const data = await this.albumsRepository.save(update);
-    return data
+    return data;
   }
 
   async deleteAlbum(album: Album) {
     const data = await this.albumsRepository.remove(album);
-    return data
+    return data;
   }
 }

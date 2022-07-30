@@ -8,31 +8,31 @@ import { Track } from '../entity/track.entity';
 export class TracksService {
   constructor(
     @InjectRepository(Track)
-    private trackRepository: Repository<Track>
-  ){}
+    private trackRepository: Repository<Track>,
+  ) {}
 
   async getTracks() {
     const data = this.trackRepository.find();
-    return data
+    return data;
   }
 
   async getTrack(id: string) {
-    const data = this.trackRepository.findOneBy({id});
-    return data
+    const data = this.trackRepository.findOneBy({ id });
+    return data;
   }
 
   async createTrack(track: ITrack) {
     const data = this.trackRepository.save(track);
-    return data
+    return data;
   }
 
   async updateTrack(update: Track) {
     const data = this.trackRepository.save(update);
-    return data
+    return data;
   }
 
   async deleteTrack(item: Track) {
     const data = this.trackRepository.remove(item);
-    return data
+    return data;
   }
 }

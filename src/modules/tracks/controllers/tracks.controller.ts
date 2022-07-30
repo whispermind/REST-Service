@@ -17,7 +17,10 @@ import { FavoritesService } from 'src/modules/favorites/services/favorites.servi
 
 @Controller('track')
 export class TracksController {
-  constructor(private service: TracksService, private favService: FavoritesService) {}
+  constructor(
+    private service: TracksService,
+    private favService: FavoritesService,
+  ) {}
   @Get()
   async getTracks() {
     return await this.service.getTracks();

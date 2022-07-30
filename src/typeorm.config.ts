@@ -1,4 +1,4 @@
-import { DataSourceOptions } from "typeorm"
+import { DataSourceOptions } from 'typeorm';
 
 export default {
   type: 'postgres',
@@ -7,9 +7,7 @@ export default {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [
-    __dirname + 'dist/**/*.entity{.ts,.js}',
-  ],
+  entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
   synchronize: true,
   autoLoadEntities: true,
-} as DataSourceOptions
+} as DataSourceOptions;

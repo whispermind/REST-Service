@@ -42,7 +42,7 @@ export class UsersController {
       version: 1,
     };
     const user = await this.service.createUser(data);
-    return { ...user, password: undefined  };
+    return { ...user, password: undefined };
   }
 
   @Put(':id')

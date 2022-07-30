@@ -7,18 +7,17 @@ import { Repository } from 'typeorm';
 export class FavoritesService {
   constructor(
     @InjectRepository(favorites)
-    private favoritesRepository: Repository<favorites>
-  ){}
+    private favoritesRepository: Repository<favorites>,
+  ) {}
   async getFavorites() {
-    let data = await this.favoritesRepository.find();
-    if(!data.length){
-
+    const data = await this.favoritesRepository.find();
+    if (!data.length) {
       const init = this.favoritesRepository.create({
         tracks: [],
         albums: [],
         artists: [],
       });
-  
+
       await this.favoritesRepository.save(init);
     }
     return await this.favoritesRepository.find();
@@ -32,7 +31,9 @@ export class FavoritesService {
 
   async removeFavoriteTrack(id: string) {
     const data = await this.getFavorites();
-    data[0].tracks = data[0].tracks.filter((trackId) => trackId !== id && trackId);
+    data[0].tracks = data[0].tracks.filter(
+      (trackId) => trackId !== id && trackId,
+    );
     return await this.favoritesRepository.save(data[0]);
   }
 
@@ -44,7 +45,9 @@ export class FavoritesService {
 
   async removeFavoriteAlbum(id: string) {
     const data = await this.getFavorites();
-    data[0].albums = data[0].albums.filter((albumId) => albumId !== id && albumId);
+    data[0].albums = data[0].albums.filter(
+      (albumId) => albumId !== id && albumId,
+    );
     return await this.favoritesRepository.save(data[0]);
   }
 
@@ -56,7 +59,9 @@ export class FavoritesService {
 
   async removeFavoriteArtist(id: string) {
     const data = await this.getFavorites();
-    data[0].artists = data[0].artists.filter((artistId) => artistId !== id && artistId);
+    data[0].artists = data[0].artists.filter(
+      (artistId) => artistId !== id && artistId,
+    );
     return await this.favoritesRepository.save(data[0]);
   }
 }

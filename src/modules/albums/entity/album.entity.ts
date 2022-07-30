@@ -1,4 +1,3 @@
-
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Artist } from 'src/modules/artists/entity/artists.entity';

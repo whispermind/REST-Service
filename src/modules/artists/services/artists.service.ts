@@ -8,31 +8,31 @@ import { Repository } from 'typeorm';
 export class ArtistsService {
   constructor(
     @InjectRepository(Artist)
-    private artistsRepository: Repository<Artist>
-  ){}
+    private artistsRepository: Repository<Artist>,
+  ) {}
 
   async getArtists() {
     const data = this.artistsRepository.find();
-    return data
+    return data;
   }
 
   async getArtist(id: string) {
-    const data = this.artistsRepository.findOneBy({id});
-    return data
+    const data = this.artistsRepository.findOneBy({ id });
+    return data;
   }
 
   async createArtist(artist: IArtist) {
     const data = this.artistsRepository.save(artist);
-    return data
+    return data;
   }
 
   async updateArtist(update: Artist) {
     const data = this.artistsRepository.save(update);
-    return data
+    return data;
   }
 
   deleteArtist(artist: Artist) {
     const data = this.artistsRepository.remove(artist);
-    return data
+    return data;
   }
 }
