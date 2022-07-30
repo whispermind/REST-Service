@@ -53,8 +53,9 @@ export class ArtistsController {
   @HttpCode(204)
   async deleteArtist(@Param('id') id: string) {
     validateUuid(id);
-    const result = await this.service.deleteArtist(id);
-    isFound(result);
+    const item = await this.service.getArtist(id);
+    isFound(item);
+    const result = await this.service.deleteArtist(item)
     this.favService.removeFavoriteArtist(id)
     return result;
   }

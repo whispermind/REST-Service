@@ -11,8 +11,8 @@ export class Artist {
   @Column('text')
   name: string;
 
-  @Column('integer')
-  year: number;
+  @Column()
+  grammy: boolean;
 
   @OneToMany(() => Album, (album) => album.artist, { cascade: true })
   @Exclude()

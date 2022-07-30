@@ -62,8 +62,9 @@ export class TracksController {
   @HttpCode(204)
   async deleteTrack(@Param('id') id: string) {
     validateUuid(id);
-    const result = await this.service.deleteTrack(id);
-    isFound(result);
+    const item = await this.service.getTrack(id);
+    isFound(item);
+    const result = await this.service.deleteTrack(item);
     this.favService.removeFavoriteTrack(id);
     return result;
   }

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { store } from 'src/db';
 import { ITrack } from 'src/IData/IData';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,40 +7,32 @@ import { Track } from '../entity/track.entity';
 @Injectable()
 export class TracksService {
   constructor(
-    
+    @InjectRepository(Track)
+    private trackRepository: Repository<Track>
   ){}
 
   async getTracks() {
-    return await store.tracks;
+    const data = this.trackRepository.find();
+    return data
   }
 
   async getTrack(id: string) {
-    return await store.tracks.find((track) => track.id === id);
+    const data = this.trackRepository.findOneBy({id});
+    return data
   }
 
   async createTrack(track: ITrack) {
-    await store.tracks.push(track);
-    return track;
+    const data = this.trackRepository.save(track);
+    return data
   }
 
-  async updateTrack(update: ITrack) {
-    const index = await store.tracks.findIndex(
-      (track) => track.id === update.id,
-    );
-    if (index < 0) return false;
-    store.tracks[index] = update;
-    return update;
+  async updateTrack(update: Track) {
+    const data = this.trackRepository.save(update);
+    return data
   }
 
-  async deleteTrack(id: string) {
-    let item;
-    store.tracks = await store.tracks.filter((track) => {
-      if (track.id === id) {
-        item = track;
-        return false;
-      }
-      return true;
-    });
-    return item || false;
+  async deleteTrack(item: Track) {
+    const data = this.trackRepository.remove(item);
+    return data
   }
 }
