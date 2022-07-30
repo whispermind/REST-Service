@@ -5,6 +5,7 @@ import { FavoritesService } from '../services/favorites.service';
 import { TracksService } from 'src/modules/tracks/services/tracks.service';
 import { AlbumsService } from 'src/modules/albums/services/albums.service';
 import { ArtistsService } from 'src/modules/artists/services/artists.service';
+import { response } from 'express';
 
 interface FavsData {
   albums: IAlbum[];
@@ -22,7 +23,7 @@ export class FavoritesController {
   ) {}
   @Get()
   async getFavs() {
-    const ids = await this.favService.getFavorites();
+    const ids = (await this.favService.getFavorites())[0];
     const responseData: FavsData = {
       albums: [],
       tracks: [],
@@ -37,6 +38,9 @@ export class FavoritesController {
     responseData.artists = await Promise.all(
       ids.artists.map((id) => this.ArtistsService.getArtist(id)),
     );
+    responseData.albums = responseData.albums.filter((id) => !!id);
+    responseData.artists = responseData.artists.filter((id) => !!id);
+    responseData.tracks = responseData.tracks.filter((id) => !!id);
     return responseData;
   }
 
@@ -47,7 +51,7 @@ export class FavoritesController {
     if(!track){
       throw new HttpException('track doesnt exist', 422);
     }
-    await await this.favService.addFavoriteTrack(id);
+    await this.favService.addFavoriteTrack(id);
   }
 
   @Delete('track/:id')
