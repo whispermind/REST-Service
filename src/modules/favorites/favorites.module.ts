@@ -6,9 +6,11 @@ import { AlbumsModule } from '../albums/albums.module';
 import { TracksModule } from '../tracks/tracks.module';
 import { favorites } from './entity/favorite.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     forwardRef(() => ArtistsModule),
     forwardRef(() => AlbumsModule),
     forwardRef(() => TracksModule),

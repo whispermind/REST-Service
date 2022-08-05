@@ -9,13 +9,15 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { ArtistsService } from '../services/artists.service';
 import { v4 } from 'uuid';
 import { isFound, validateUuid } from 'src/validation/validation';
 import { FavoritesService } from 'src/modules/favorites/services/favorites.service';
-
+import { AuthGuard } from '@nestjs/passport';
 @Controller('artist')
+@UseGuards(AuthGuard('jwt'))
 export class ArtistsController {
   constructor(
     private service: ArtistsService,

@@ -1,3 +1,4 @@
+import { AuthGuard } from '@nestjs/passport';
 import { CreateTrackDto } from '../dto/create-track.dto';
 import { UpdateTrackDto } from '../dto/update-track.dto';
 import {
@@ -9,6 +10,7 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { v4 } from 'uuid';
 import { isFound, validateUuid } from 'src/validation/validation';
@@ -16,6 +18,7 @@ import { TracksService } from '../services/tracks.service';
 import { FavoritesService } from 'src/modules/favorites/services/favorites.service';
 
 @Controller('track')
+@UseGuards(AuthGuard('jwt'))
 export class TracksController {
   constructor(
     private service: TracksService,

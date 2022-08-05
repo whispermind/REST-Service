@@ -1,3 +1,4 @@
+import { AuthGuard } from '@nestjs/passport';
 import { FavoritesService } from './../../favorites/services/favorites.service';
 import { CreateAlbumDto } from '../dto/create-album.dto';
 import { UpdateAlbumDto } from '../dto/update-album.dto';
@@ -10,12 +11,14 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { v4 } from 'uuid';
 import { isFound, validateUuid } from 'src/validation/validation';
 import { AlbumsService } from '../services/albums.service';
 
 @Controller('album')
+@UseGuards(AuthGuard('jwt'))
 export class AlbumsController {
   constructor(
     private service: AlbumsService,

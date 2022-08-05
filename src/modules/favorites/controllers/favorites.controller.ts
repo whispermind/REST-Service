@@ -6,14 +6,16 @@ import {
   Delete,
   HttpCode,
   HttpException,
+  UseGuards,
 } from '@nestjs/common';
 import { isFound, validateUuid } from 'src/validation/validation';
 import { FavoritesService } from '../services/favorites.service';
 import { TracksService } from 'src/modules/tracks/services/tracks.service';
 import { AlbumsService } from 'src/modules/albums/services/albums.service';
 import { ArtistsService } from 'src/modules/artists/services/artists.service';
-
+import { AuthGuard } from '@nestjs/passport';
 @Controller('favs')
+@UseGuards(AuthGuard('jwt'))
 export class FavoritesController {
   constructor(
     private favService: FavoritesService,

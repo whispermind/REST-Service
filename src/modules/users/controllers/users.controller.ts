@@ -1,3 +1,4 @@
+import { AuthGuard } from '@nestjs/passport';
 import { IUser } from '../../../IData/IData';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdatePasswordDto } from '../dto/update-password-dto';
@@ -11,12 +12,14 @@ import {
   Put,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { v4 } from 'uuid';
 import { isFound, validateUuid } from 'src/validation/validation';
 
 @Controller('user')
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private service: UsersService) {}
   @Get()

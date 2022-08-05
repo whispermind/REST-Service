@@ -2,7 +2,7 @@ import { DataSourceOptions } from 'typeorm';
 
 export default {
   type: 'postgres',
-  host: 'localhost',//process.env.POSTGRES_DB,
+  host: 'localhost', //process.env.POSTGRES_DB,
   port: +process.env.POSTGRES_PORT,
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
