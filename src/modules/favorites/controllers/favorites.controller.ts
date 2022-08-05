@@ -1,4 +1,3 @@
-import { IAlbum, ITrack, IArtist } from './../../../IData/IData';
 import {
   Controller,
   Get,
@@ -14,41 +13,43 @@ import { TracksService } from 'src/modules/tracks/services/tracks.service';
 import { AlbumsService } from 'src/modules/albums/services/albums.service';
 import { ArtistsService } from 'src/modules/artists/services/artists.service';
 
-interface FavsData {
-  albums: IAlbum[];
-  tracks: ITrack[];
-  artists: IArtist[];
-}
-
 @Controller('favs')
 export class FavoritesController {
   constructor(
     private favService: FavoritesService,
     private trackService: TracksService,
     private albumsService: AlbumsService,
-    private ArtistsService: ArtistsService,
+    private artistsService: ArtistsService,
   ) {}
   @Get()
   async getFavs() {
     const ids = (await this.favService.getFavorites())[0];
-    const responseData: FavsData = {
-      albums: [],
-      tracks: [],
-      artists: [],
-    };
-    responseData.albums = await Promise.all(
-      ids.albums.map((id) => this.albumsService.getAlbum(id)),
+    const albums = await Promise.all(
+      ids.albums.reduce((acc, id) => {
+        if (id) {
+          acc.push(this.albumsService.getAlbum(id));
+        }
+        return acc;
+      }, []),
     );
-    responseData.tracks = await Promise.all(
-      ids.tracks.map((id) => this.trackService.getTrack(id)),
+    const tracks = await Promise.all(
+      ids.tracks.reduce((acc, id) => {
+        if (id) {
+          acc.push(this.trackService.getTrack(id));
+        }
+        return acc;
+      }, []),
     );
-    responseData.artists = await Promise.all(
-      ids.artists.map((id) => this.ArtistsService.getArtist(id)),
+    const artists = await Promise.all(
+      ids.artists.reduce((acc, id) => {
+        if (id) {
+          acc.push(this.artistsService.getArtist(id));
+        }
+        return acc;
+      }, []),
     );
-    responseData.albums = responseData.albums.filter((id) => !!id);
-    responseData.artists = responseData.artists.filter((id) => !!id);
-    responseData.tracks = responseData.tracks.filter((id) => !!id);
-    return responseData;
+
+    return { albums, tracks, artists };
   }
 
   @Post('track/:id')
@@ -90,7 +91,7 @@ export class FavoritesController {
   @Post('artist/:id')
   async addFavAritst(@Param('id') id: string) {
     validateUuid(id);
-    const artist = await this.ArtistsService.getArtist(id);
+    const artist = await this.artistsService.getArtist(id);
     if (!artist) {
       throw new HttpException('artist doesnt exist', 422);
     }
