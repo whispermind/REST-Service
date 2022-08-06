@@ -8,4 +8,4 @@ RUN npm install -f
 
 COPY . .
 
-CMD ["npm", "run", "start:dev"]
+EXPOSE ${PORT}

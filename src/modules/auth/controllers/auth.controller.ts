@@ -23,7 +23,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('refresh')
-  async refresh(@Body() { refresh_token }: Tokens) {
-    return this.authService.updateRT(refresh_token);
+  async refresh(@Body() { refreshToken }: Tokens) {
+    return this.authService.updateRT(refreshToken);
   }
 }

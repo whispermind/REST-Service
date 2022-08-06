@@ -29,10 +29,12 @@ services:
       volumes:
       - .:/app
       - ./logs:/app/logs
+      - /app/node_modules
       env_file:
       - .env
       depends_on:
       - postgres
+      command: npm run start:dev
 
 networks:
     appNetwork:

@@ -28,30 +28,26 @@ export class FavoritesController {
     const ids = (await this.favService.getFavorites())[0];
     const albums = await Promise.all(
       ids.albums.reduce((acc, id) => {
-        if (id) {
-          acc.push(this.albumsService.getAlbum(id));
-        }
+        acc.push(this.albumsService.getAlbum(id));
         return acc;
       }, []),
     );
     const tracks = await Promise.all(
       ids.tracks.reduce((acc, id) => {
-        if (id) {
-          acc.push(this.trackService.getTrack(id));
-        }
+        acc.push(this.trackService.getTrack(id));
         return acc;
       }, []),
     );
     const artists = await Promise.all(
       ids.artists.reduce((acc, id) => {
-        if (id) {
-          acc.push(this.artistsService.getArtist(id));
-        }
+        acc.push(this.artistsService.getArtist(id));
         return acc;
       }, []),
     );
 
-    return { albums, tracks, artists };
+    return {  artists: artists.filter((item) => item !== null && item !== undefined),
+      albums: albums.filter((item) => item !== null && item !== undefined),
+      tracks: tracks.filter((item) => item !== null && item !== undefined), };
   }
 
   @Post('track/:id')

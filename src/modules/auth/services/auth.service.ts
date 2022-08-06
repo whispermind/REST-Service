@@ -19,7 +19,7 @@ export class AuthService {
     if (!user) {
       throw new Error('TEMP MESSAGE');
     }
-    if(!this.validatePassword(password, user.password)){
+    if (!this.validatePassword(password, user.password)) {
       throw new Error();
     }
     return this.getTokens(user.id, user.login);
@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   async getTokens(id: string, login: string): Promise<Tokens> {
-    const [acess_token, refresh_token] = await Promise.all([
+    const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           id,
@@ -80,8 +80,8 @@ export class AuthService {
     ]);
 
     return {
-      acess_token,
-      refresh_token,
+      accessToken,
+      refreshToken,
     };
   }
 }
