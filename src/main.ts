@@ -1,3 +1,4 @@
+import { LoggerService } from './logger/logger.services';
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -8,7 +9,9 @@ import { join, dirname } from 'path';
 import { readFile } from 'fs/promises';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new LoggerService(),
+  });
   app.useGlobalPipes(new ValidationPipe());
   const root = dirname(__dirname);
   const source = await readFile(join(root, 'doc', 'api.yaml'), 'utf-8');

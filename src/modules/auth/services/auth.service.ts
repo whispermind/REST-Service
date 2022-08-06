@@ -3,7 +3,7 @@ import { Tokens } from './../types/tokents.type';
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/modules/users/services/users.service';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 
 @Injectable()
